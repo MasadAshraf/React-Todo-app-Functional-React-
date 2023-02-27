@@ -1,24 +1,30 @@
 import logo from './logo.svg';
-import './App.css';
+import  Todo  from './components/Todo';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { Nav, Stack, ThemeProvider } from 'react-bootstrap';
+
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ThemeProvider
+  breakpoints={['xxxl', 'xxl', 'xl', 'lg', 'md', 'sm', 'xs', 'xxs']}
+  minBreakpoint="xxs"
+>
+<Nav
+      activeKey="/home"
+      onSelect={(selectedKey) => alert(`selected ${selectedKey}`)}
+    >
+      <Nav.Item>
+        <Nav.Link href="/">TODO APP</Nav.Link>
+      </Nav.Item>
+    </Nav>
+
+<Stack gap={2} className="col-md-5 mx-auto">
+<Todo></Todo>
+    </Stack>
+
+</ThemeProvider>
+
   );
 }
 
