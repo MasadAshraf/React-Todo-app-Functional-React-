@@ -33,7 +33,7 @@ function Todo() {
 
 
   return (
-    <Container fluid>
+    <Container fluid="md">
       <Row>
         <Col>
           <Form>

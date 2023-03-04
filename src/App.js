@@ -1,30 +1,27 @@
-import logo from './logo.svg';
-import  Todo  from './components/Todo';
+import Todo from './components/Todo';
+import Layout from './components/layout/Layout';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Nav, Stack, ThemeProvider } from 'react-bootstrap';
+import { Route, Routes } from 'react-router-dom';
+import About from './components/About';
+import Profile from './components/Profile';
+import { useState } from 'react';
+import Login from './components/Login';
 
 
 function App() {
+
+  const [isAuth, setIsAuth] = useState(false);
+  
   return (
-    <ThemeProvider
-  breakpoints={['xxxl', 'xxl', 'xl', 'lg', 'md', 'sm', 'xs', 'xxs']}
-  minBreakpoint="xxs"
->
-<Nav
-      activeKey="/home"
-      onSelect={(selectedKey) => alert(`selected ${selectedKey}`)}
-    >
-      <Nav.Item>
-        <Nav.Link href="/">TODO APP</Nav.Link>
-      </Nav.Item>
-    </Nav>
+    <Routes>
+      <Route path="/" element={<Layout isAuth={isAuth} />}>
+        <Route index element={isAuth? <Todo /> : null} />
+        <Route path="/about" element={isAuth ? <About/> : null} />
+        <Route path="/profile" element={isAuth ? <Profile/> : null} />
+        <Route path="/login" element={<Login/>} />
 
-<Stack gap={2} className="col-md-5 mx-auto">
-<Todo></Todo>
-    </Stack>
-
-</ThemeProvider>
-
+      </Route>
+    </Routes>
   );
 }
 
