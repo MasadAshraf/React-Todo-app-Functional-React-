@@ -1,7 +1,18 @@
 import { Nav, NavDropdown } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
-export default function ProtectedNav() {
+
+export default function ProtectedNav({checkUserToken}) {
+  const navigate = useNavigate();
+  const signOut = () => {
+    console.log('protected routed hit')
+    localStorage.clear();
+    checkUserToken();
+    setTimeout(()=> {
+      navigate('/login')
+    },500)
+  }
 
   return (
     <>
@@ -13,10 +24,10 @@ export default function ProtectedNav() {
         About
       </Nav.Link>
       <NavDropdown title="Settings" id="basic-nav-dropdown">
-        <NavDropdown.Item > <Link to="/profile">Profile</Link></NavDropdown.Item>
+        <NavDropdown.Item as={Link} to="/profile">Profile</NavDropdown.Item>
         <NavDropdown.Divider />
-        <NavDropdown.Item >
-          <Link to="/">Signout</Link>
+        <NavDropdown.Item onClick={signOut} >
+        Signout
         </NavDropdown.Item>
       </NavDropdown></>
   );

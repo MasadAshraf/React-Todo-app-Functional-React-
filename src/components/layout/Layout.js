@@ -1,12 +1,9 @@
-import { useState } from "react";
 import { Container, Nav, Navbar } from "react-bootstrap";
 import { Outlet } from "react-router-dom";
 import ProtectedNav from "./ProtectedNav";
 import PublicNav from "./PublicNav";
 
-export default function Layout({isAuth}) {
-console.log(isAuth)
-
+export default function Layout({isAuth,checkUserToken}) {
 
   return (
     <div>
@@ -21,7 +18,7 @@ console.log(isAuth)
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
               <Nav className="me-auto">
-              {isAuth ? <ProtectedNav/> : <PublicNav/> }
+              {isAuth ? <ProtectedNav checkUserToken={checkUserToken} / > : <PublicNav/> }
               </Nav>
             </Navbar.Collapse>
           </Container>
