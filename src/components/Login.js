@@ -1,9 +1,13 @@
 import { useEffect } from "react";
 import { Button, Container, Form } from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { setAuthPayload } from "../store/reducers/authSlice";
 
-export default function Login({isAuth, checkUserToken }) {
+export default function Login() {
+    const isAuth = useSelector((state) => state.auth.isAuth)
     const navigate = useNavigate();
+    const dispatch = useDispatch();
     useEffect(() => {
         if(isAuth){
             navigate('/')
@@ -13,10 +17,10 @@ export default function Login({isAuth, checkUserToken }) {
     const loginUser = (e) => {
         e.preventDefault();
         localStorage.setItem('user-token', 'token');
-        checkUserToken();
-        setTimeout(()=> {
-            navigate('/')
-          },500)
+        dispatch( setAuthPayload(true))
+        // setTimeout(()=> {
+        //     navigate('/')
+        //   },500)
     }
 
     return (

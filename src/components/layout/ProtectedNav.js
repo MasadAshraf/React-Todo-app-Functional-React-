@@ -1,17 +1,20 @@
 import { Nav, NavDropdown } from "react-bootstrap";
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { setAuthPayload } from "../../store/reducers/authSlice";
 
 
 export default function ProtectedNav({checkUserToken}) {
+  const dispatch = useDispatch()
   const navigate = useNavigate();
   const signOut = () => {
     console.log('protected routed hit')
     localStorage.clear();
-    checkUserToken();
-    setTimeout(()=> {
-      navigate('/login')
-    },500)
+    dispatch( setAuthPayload(false))
+    // setTimeout(()=> {
+    //   navigate('/login')
+    // },500)
   }
 
   return (

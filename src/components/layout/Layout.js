@@ -1,10 +1,11 @@
 import { Container, Nav, Navbar } from "react-bootstrap";
+import { useSelector } from "react-redux";
 import { Outlet } from "react-router-dom";
 import ProtectedNav from "./ProtectedNav";
 import PublicNav from "./PublicNav";
 
-export default function Layout({isAuth,checkUserToken}) {
-
+export default function Layout() {
+  const isAuth = useSelector((state) => state.auth.isAuth)
   return (
     <div>
       {/* A "layout route" is a good place to put markup you want to
@@ -18,7 +19,7 @@ export default function Layout({isAuth,checkUserToken}) {
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
               <Nav className="me-auto">
-              {isAuth ? <ProtectedNav checkUserToken={checkUserToken} / > : <PublicNav/> }
+              {isAuth ? <ProtectedNav/> : <PublicNav/> }
               </Nav>
             </Navbar.Collapse>
           </Container>

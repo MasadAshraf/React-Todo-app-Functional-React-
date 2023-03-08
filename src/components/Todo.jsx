@@ -1,33 +1,33 @@
 import { useEffect, useState } from 'react';
 import { Button, Col, Container, Form, Row } from 'react-bootstrap';
+import { useDispatch, useSelector } from 'react-redux';
+import { addTodo, removeTodoTask, updateTodo } from '../store/reducers/todoSlice';
 import ListTodo from './ListTodo';
 
 
 function Todo() {
-  const [todolist, setTodolist] = useState([]);
   const [inputTask, setInputTask] = useState('');
+  const todolist = useSelector((state) => state.todo.todoList)
+  const dispatch = useDispatch();
 
   const handleForm = (event) => {
     event.preventDefault()
     if (inputTask) {
-      setTodolist(todolist => [...todolist, inputTask]);
+      dispatch(addTodo(inputTask))
       setInputTask('');
     }
 
   }
 
   const removeTask = (i) => {
-    console.log('remove index', i)
-    let array = [...todolist];
-      array.splice(i,1);
-       setTodolist(array);
+    dispatch(removeTodoTask(inputTask))
   }
 
-  const updateTask = (i,updateVal) => {
-    console.log('update index', i)
-    let array = [...todolist];
-      array[i] = updateVal;
-       setTodolist(array);
+  const updateTask = (i, updateVal) => {
+    dispatch(updateTodo({
+      index: i,
+      value: updateVal
+    }))
   }
 
 
@@ -39,7 +39,8 @@ function Todo() {
           <Form>
             <Form.Group className="mb-3" controlId="formBasicEmail" onSubmit={(e) => e.preventDefault()}>
               <Form.Label>Enter Your Tasks</Form.Label>
-              <Form.Control value={inputTask} onChange={(e) => setInputTask(e.target.value)} type="text" placeholder="Please enter your tasks" />
+              <Form.Control value={inputTask}
+                onChange={(e) => setInputTask(e.target.value)} type="text" placeholder="Please enter your tasks" />
             </Form.Group>
             <Button onClick={handleForm} variant="primary" type="submit">
               Add Todo

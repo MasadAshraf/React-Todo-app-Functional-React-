@@ -6,38 +6,38 @@ import About from './components/About';
 import Profile from './components/Profile';
 import { useEffect, useState } from 'react';
 import Login from './components/Login';
-
+import { useSelector, useDispatch } from 'react-redux'
+import { setAuthPayload } from './store/reducers/authSlice';
 
 function App() {
+  const isAuth = useSelector((state) => state.auth.isAuth)
+  const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [isAuth, setIsAuth] = useState(false);
-
-  const checkUserToken = () => {
+ 
+  useEffect(() => {
     const userToken = localStorage.getItem('user-token');
     if (!userToken || userToken === 'undefined') {
-      setIsAuth(false);
+      dispatch( setAuthPayload(false))
       navigate('/login')
     }else{
-      setIsAuth(true);
+      dispatch( setAuthPayload(true))
     }
-
-}
-
-  useEffect(() => {
-    console.log('checking token')
-    console.log(isAuth);
-    checkUserToken();
 }, [isAuth]);
-
+  
   
   return (
     <Routes>
  
-        <Route path="/" element={<Layout isAuth={isAuth} checkUserToken={checkUserToken} />}>
-        <Route index element={isAuth ?  <Todo /> : null} />
-        <Route path="/about" element={isAuth ? <About/> :  null} />
-        <Route path="/profile" element={isAuth ? <Profile/> : null} />
-        <Route path="/login" element={<Login isAuth={isAuth}  checkUserToken={checkUserToken}  />} />
+        <Route path="/" element={<Layout />}>
+        <Route index element={<>
+          <Todo />
+          <Todo />
+          <Todo />
+          <Todo />
+        </>} />
+        <Route path="/about" element={<About/>} />
+        <Route path="/profile" element={<Profile/>} />
+        <Route path="/login" element={<Login />} />
 
       </Route>
     </Routes>
